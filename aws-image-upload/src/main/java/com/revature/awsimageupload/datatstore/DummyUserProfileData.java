@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class dummyUserProfileData {
+public class DummyUserProfileData {
 
     private static final List<UserProfile> USER_PROFILES = new ArrayList<>();
 
