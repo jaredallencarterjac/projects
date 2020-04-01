@@ -3,7 +3,7 @@ package com.revature.awsimageupload.bucket;
 public enum BucketName {
 
     //enum is taking in this specific value
-    PROFILE_IMAGE("revaturecode-image-upload");
+    PROFILE_IMAGE("fm-bucket-demo");
 
 
     private final String bucketName;

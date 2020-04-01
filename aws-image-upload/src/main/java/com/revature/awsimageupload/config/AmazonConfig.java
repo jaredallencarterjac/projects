@@ -3,8 +3,10 @@ package com.revature.awsimageupload.config;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,12 +18,13 @@ public class AmazonConfig {
     public AmazonS3 s3() {
         //passing access and secret key
         AWSCredentials awsCredentials = new BasicAWSCredentials(
-             "AKIAJWWTKLOG4DY3LNSQ",
-                "j8wX263eIvQ4PwQGIA7Ey+Ibr1O2gnTNK/RGFr5R"
+             "",
+                ""
         );
 
         return AmazonS3ClientBuilder
                 .standard()
+                .withRegion(Regions.US_WEST_1)
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                 .build();
 
