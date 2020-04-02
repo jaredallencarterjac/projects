@@ -35,13 +35,12 @@ public class CompareFaceService {
             CompareFacesResult result = rekognitionClient.compareFaces(compareFacesRequest);
             List<CompareFacesMatch> lists = result.getFaceMatches();
 
-            System.out.println("Detected labels for " + this.image1 + " and " + this.image2);
+            System.out.println( this.image1 + " " + this.image2);
 
             if (!lists.isEmpty()) {
                 for (CompareFacesMatch label : lists) {
                     imageResultsSameFace = label.getSimilarity().toString();
-                    System.out.println(label.getFace() + ": Similarity is " + label.getSimilarity().toString());
-                    System.out.println("Photo1" + this.image1 + "photo2" + this.image2 + "similarity score" + label.getSimilarity().toString());
+                    System.out.println(label.getFace()+ label.getSimilarity().toString());
 
                 }
             } else {
@@ -56,7 +55,7 @@ public class CompareFaceService {
 
     public String compareDiffFaces(String photo1, String photo3) {
 
-        String imageResultsDiffFaces = "";
+        String imageResultsDiffFaces = " ";
 
         CompareFacesRequest compareFacesRequest = new CompareFacesRequest().withSourceImage(new Image()
                 .withS3Object(new S3Object()
@@ -69,18 +68,17 @@ public class CompareFaceService {
             CompareFacesResult result = rekognitionClient.compareFaces(compareFacesRequest);
             List<CompareFacesMatch> lists = result.getFaceMatches();
 
-            System.out.println("Detected labels for " + this.image1 + " and " + this.image3);
+            System.out.println( this.image1 + " " + this.image3);
 
             if (!lists.isEmpty()) {
                 for (CompareFacesMatch label : lists) {
 
                     imageResultsDiffFaces = label.getSimilarity().toString();
 
-                    System.out.println(label.getFace() + ": Similarity is " + label.getSimilarity().toString());
-                    System.out.println("Photo1" + this.image1 + "photo3" + this.image3 + "similarity score" + label.getSimilarity().toString());
+                    System.out.println(label.getFace() + label.getSimilarity().toString());
                 }
             } else {
-                imageResultsDiffFaces = (this.image1 + " " + this.image3);
+                imageResultsDiffFaces = (this.image1 + " "+ this.image3);
                 System.out.println("The faces are not a match");
             }
         } catch (Exception e) {
