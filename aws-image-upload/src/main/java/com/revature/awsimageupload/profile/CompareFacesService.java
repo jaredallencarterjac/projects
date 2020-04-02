@@ -22,6 +22,8 @@ public class CompareFacesService {
     //target image
     String image2 = "brad-pitt.jpg";
 
+    String image3 = "taye.jpg";
+
     AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard().withRegion("us-west-1").build();
 
     public String compareFaces(String image1, String image2) {
@@ -59,6 +61,42 @@ public class CompareFacesService {
         }
         return imageResult;
     }
+
+    public String compareOneAndTwo(String pic1, String pic3) {
+
+        String output2 = "";
+        //Comparing photo 1 and photo 3;
+        CompareFacesRequest compareFacesRequest = new CompareFacesRequest().withSourceImage(new Image()
+                .withS3Object(new S3Object()
+                        .withName(photo1).withBucket(bucketName))).withTargetImage(new Image()
+                .withS3Object(new S3Object()
+                        .withName(photo3).withBucket(bucketName))).withSimilarityThreshold(80F);
+
+        try{
+
+            CompareFacesResult result = rekognitionClient.compareFaces(compareFacesRequest);
+            List<CompareFacesMatch> lists = result.getFaceMatches();
+
+            System.out.println("Detected labels for " + photo1 + " and " + photo3);
+
+            if (!lists.isEmpty()) {
+                for (CompareFacesMatch label : lists) {
+                    output2 = label.getSimilarity().toString();
+                    System.out.println(label.getFace() + ": Similarity is " + label.getSimilarity().toString());
+                    System.out.println("Photo1" + photo1 + "photo3" + photo3 + "similarity score" + label.getSimilarity().toString());
+                }
+            } else {
+                output2 = (photo1 + " " + photo3 + ": FACES DO NOT MATCH");
+                System.out.println("Faces do not match!");
+            }
+        } catch (Exception e){
+            System.out.println("error");
+        }
+        return output2;
+    }
+
+
+
 
 
 }
